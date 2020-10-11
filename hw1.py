@@ -5,6 +5,7 @@ import io
 import time
 import nltk
 import os
+import json
 from nltk.tokenize import word_tokenize 
 from nltk.corpus import stopwords 
 nltk.download('stopwords') 
@@ -53,13 +54,13 @@ for record in f:
                         output[item][count].append(j+1)
                         print "\n\n\n32 item: ", item, ": ", output[item]
         print "\n\n\n48 count " , count ,"; output: ", output
-        f2= open("./output/output_" +  time.strftime("%Y%m%d%H%M%S", time.localtime())+ ".txt","w+")
-        f2.write(tmp)
+        f2= open("./output/output_" +  time.strftime("%Y%m%d%H%M%S", time.localtime())+ ".json","w+")
+        json.dump(output, f2)
         f2.close
         count += 1
 
 print "\n\n\n50 output: ", output
-f2= open("./output/output_" +  time.strftime("%Y%m%d%H%M%S", time.localtime())+ ".txt","w+")
-f2.write(tmp)
+f2= open("./output/output_" +  time.strftime("%Y%m%d%H%M%S", time.localtime())+ ".json","w+")
+json.dump(output, f2)
 f2.close
 f.close
