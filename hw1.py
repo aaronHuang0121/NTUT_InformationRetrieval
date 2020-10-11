@@ -24,6 +24,7 @@ for record in f:
         text_tokens = word_tokenize(read) 
         nltk_tokens = [ word for word in text_tokens if not word in stopwords.words()]
         #nltk_tokens = sorted(set(tmp),key=tmp.index)
+        ordered_tokens = set()
         tokens_without_sw = []
         for word in nltk_tokens:
             if word not in ordered_tokens:
