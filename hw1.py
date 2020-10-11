@@ -54,7 +54,7 @@ for record in f:
                         output[item][count].append(j+1)
                         print "\n\n\n32 item: ", item, ": ", output[item]
         print "\n\n\n48 count " , count ,"; output: ", output
-        f2= open("./output/output_" +  time.strftime("%Y%m%d%H%M%S", time.localtime())+ ".txt","w+")
+        f2= open("./output/output_" +  time.strftime("%Y%m%d%H%M%S", time.localtime())+ ".json","w+")
         json.dump(output, f2)
         f2.close
         count += 1
