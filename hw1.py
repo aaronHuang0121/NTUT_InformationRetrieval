@@ -22,9 +22,13 @@ for record in f:
         read = r.text.lower()
         print("24 read: ", read)
         text_tokens = word_tokenize(read) 
-        tmp = [ word for word in text_tokens if not word in stopwords.words()]
-        tmp = sorted(set(tmp),key=tmp.index)
-        tokens_without_sw = tmp
+        nltk_tokens = [ word for word in text_tokens if not word in stopwords.words()]
+        #nltk_tokens = sorted(set(tmp),key=tmp.index)
+        tokens_without_sw = []
+        for word in nltk_tokens:
+            if word not in ordered_tokens:
+                ordered_tokens.add(word)
+                tokens_without_sw.append(word) 
         check = read.split()
         print("30 check", check)
         for item in tokens_without_sw:
