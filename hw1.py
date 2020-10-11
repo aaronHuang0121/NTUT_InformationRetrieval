@@ -60,7 +60,7 @@ for record in f:
         count += 1
 
 print "\n\n\n50 output: ", output
-f2= open("./output/output_" +  time.strftime("%Y%m%d%H%M%S", time.localtime())+ ".txt","w+")
+f2= open("./output/output_" +  time.strftime("%Y%m%d%H%M%S", time.localtime())+ ".json","w+")
 json.dump(output, f2)
 f2.close
 f.close
