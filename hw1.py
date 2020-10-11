@@ -8,7 +8,6 @@ from nltk.corpus import stopwords
 nltk.download('stopwords') 
 nltk.download('punkt')
 
-
 punc = '''!()-[]{};:'"\, <>./?@#$%^&*_~\n'''
 count = 1
 output = {} 
@@ -19,8 +18,8 @@ for record in f:
     if record.type == 'response':
         print("21 record.type: ", record.type, " , record.url: " , record.url)
         r = requests.get(record.url)
-        read = r.text.lower()
-        print("24 read: ", read)
+        read = r.text.encode('ascii', 'ignore').lower()
+        print("24 read: ", read," ",type(read))
         text_tokens = word_tokenize(read) 
         nltk_tokens = [ word for word in text_tokens if not word in stopwords.words()]
         #nltk_tokens = sorted(set(tmp),key=tmp.index)
@@ -33,22 +32,24 @@ for record in f:
         check = read.split()
         print("30 check", check)
         for item in tokens_without_sw:
-            print("32 str(item): ", str(item))
-            if str(item) not in output:
-                output[str(item)] = {}
-                output[str(item)][' total'] = check.count(str(item))
-                output[str(item)][count] = []
+            print("32 item: ", item)
+            if item not in output:
+                output[item] = {}
+                output[item][' total'] = check.count(item)
+                output[item][count] = []
                 for j in range(1,len(check)+1):
                     if check[j] == item:
-                        output[str(item)][count].append(j)
+                        output[item][count].append(j)
             else:
-                output[str(item)][' total'] += check.count(str(item))
-                if count not in output[str(item)]:
-                    output[str(item)][count] = []
+                output[item][' total'] += check.count(item)
+                if count not in output[item]:
+                    output[item][count] = []
                 for j in range(1,len(check)+1):
                     if check[j] == item:
-                        output[str(item)][count].append(j)
+                        output[item][count].append(j)
             print(output[item])
         count += 1
 
 print(output) 
+f= open("output.txt","w+")
+f.write(output)
