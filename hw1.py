@@ -2,19 +2,20 @@ import warc
 import sys
 import requests
 import io
-import nltk 
+import time
+import nltk
+import os
 from nltk.tokenize import word_tokenize 
 from nltk.corpus import stopwords 
 nltk.download('stopwords') 
 nltk.download('punkt')
 
-
+if not os.path.isdir("./output"): os.mkdir("./output")
 punc = '''!()-[]{};:'"\, <>./?@#$%^&*_~\n='''
 count = 1
 output = {} 
 
 f = warc.open("01.warc.gz")
-
 for record in f:
     if record.type == 'response':
         print "21 record.type: ", record.type, " , record.url: " , record.url
@@ -35,7 +36,6 @@ for record in f:
         check = read.split()
         print "\n\n\n30 check", check
         for item in tokens_without_sw:
-            print "\n\n\n32 item: ", item
             if item not in output:
                 output[item] = {}
                 output[item][' total'] = check.count(item)
@@ -43,6 +43,7 @@ for record in f:
                 for j in range(0,len(check)):
                     if check[j] == item:
                         output[item][count].append(j+1)
+                        print "\n\n\n32 item: ", item, ": ", output[item]
             else:
                 output[item][' total'] += check.count(item)
                 if count not in output[item]:
@@ -50,11 +51,15 @@ for record in f:
                 for j in range(0,len(check)):
                     if check[j] == item:
                         output[item][count].append(j+1)
-            print(output[item])
-        print "\n\n\n48 output", output
+                        print "\n\n\n32 item: ", item, ": ", output[item]
+        print "\n\n\n48 count " , count ,"; output: ", output
+        f2= open("./output/output_" +  time.strftime("%Y%m%d%H%M%S", time.localtime())+ ".txt","w+")
+        f2.write(tmp)
+        f2.close
         count += 1
 
-print "\n\n\n50 output: ", output 
-
-f= open("output.txt","w+")
-f.write(output)
+print "\n\n\n50 output: ", output
+f2= open("./output/output_" +  time.strftime("%Y%m%d%H%M%S", time.localtime())+ ".txt","w+")
+f2.write(tmp)
+f2.close
+f.close
