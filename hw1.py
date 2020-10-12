@@ -41,7 +41,7 @@ for record in f:
             #print "\n\n\n28 tokens_without_sw: ",tokens_without_sw
             check = read.split()
             #print "\n\n\n30 check", check
-            for item in tokens_without_sw and heck.count(item) != 0:
+            for item in tokens_without_sw: #and check.count(item) != 0:
                 if item not in output:
                     output[item] = {}
                     output[item][' total'] = check.count(item)
