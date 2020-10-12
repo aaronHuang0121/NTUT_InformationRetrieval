@@ -23,10 +23,11 @@ for record in f:
             t1 = time.time()
             print "21 record.type: ", record.type, " , record.url: " , record.url
             r = requests.get(record.url, verify=False, headers={'Connection':'close'})
+            read = r.text
             for ele in read:   
                 if ele in punc:   
                     read = read.replace(ele, " ")
-            read = r.text.encode('ascii', 'ignore').lower()
+            read = read.encode('ascii', 'ignore').lower()
             #print "\n\n\n24  ",type(read)," read: ", read
             text_tokens = word_tokenize(read) 
             nltk_tokens = [ word for word in text_tokens if not word in stopwords.words()]
